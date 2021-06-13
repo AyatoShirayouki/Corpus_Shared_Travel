@@ -1,0 +1,115 @@
+﻿@model Shared_Traveling.ViewModels.Requests.IndexVM
+@using Shared_Traveling.Entities
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.2/particles.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.2/particles.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<link href="//datatables.net/download/build/nightly/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+<script src="//datatables.net/download/build/nightly/jquery.dataTables.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });
+</script>
+
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+        <br />
+        <a href="/TravelPost/Index">
+            <img width="45" src="~/images/back.png" />
+        </a>
+        <br /><br />
+        <form action="/Posts/Create" method="post">
+            <div class="card">
+                <div class="card-header">
+                    @Model.User.FirstName @Model.User.LastName (@Model.User.Username)
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        @Model.Post.CityOfDeparture (@Model.Post.HourOfDeparture) - @Model.Post.CityOfDestination (@Model.Post.HourOfDestination)<br />
+                        Available Seats: @Model.Post.AvailableSeats
+                    </h5>
+                    <p class="card-text">
+                        <strong>Address of departure</strong>: @Model.Post.AddressOfDeparture<br />
+                        <strong>Address of destination</strong>: @Model.Post.AddressOfDestination<br />
+                        <strong>Price</strong>: @Model.Post.Price leva
+                    </p>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-3"></div>
+</div>
+
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-6"><hr /></div>
+    <div class="col-3"></div>
+</div>
+
+<div class="row">
+    <div class="col-4"></div>
+    <div class="col-4">
+        <h3>Requests:</h3>
+        <table id="myTable" class="borderless-table">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Post.AvailableSeats > 0)
+                {
+                    @foreach (Request item in Model.Items.Distinct())
+                    {
+                        <tr>
+                            <td>
+                                <img style="padding-top:5px;margin-left:15px;" width="20" src="~/images/up-arrow.png" />
+                                <div style="height: 50px" class="card">
+                                    <div style="height: 50px" class="card-header">
+                                        @item.Content
+                                        <a style="float:right;" href="/Requests/Delete?id=@item.Id">
+                                            <img width="25" src="~/images/trash.png" />
+                                        </a>
+                                        @using (Html.BeginForm("Approve", "TravelPost", new { requestId = item.Id }, FormMethod.Post))
+                                        {
+                                            <button style="float:right; margin-top: -30px" class="btn btn-success">Approve</button>
+                                        }
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-4"></div>
+</div>
+
+<script>
+    window.
+        onload
+        = function () {
+            Particles.
+                init
+                ({
+                    selector:
+                        '.background'
+                });
+        };
+    var particles = Particles.init({
+        selector: '.background',
+        color: ['#DA0463', '#404B69', '#DBEDF3'],
+        connectParticles: true
+    });
+</script>
+<canvas class="background"></canvas>
+

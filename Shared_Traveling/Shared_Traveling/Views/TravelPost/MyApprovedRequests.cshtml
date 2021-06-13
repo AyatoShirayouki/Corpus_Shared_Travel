@@ -1,0 +1,107 @@
+﻿@model Shared_Traveling.ViewModels.TravelPosts.MyApprovedRequestsVM
+@using Shared_Traveling.Entities
+@using System.Linq
+@{
+    ViewData["Title"] = "MyApprovedRequests";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.2/particles.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.2/particles.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<link href="//datatables.net/download/build/nightly/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+<script src="//datatables.net/download/build/nightly/jquery.dataTables.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });
+</script>
+
+<section class="jumbotron text-center" style="opacity: 0.9">
+    <div class="container">
+        <h1 class="jumbotron-heading" style=" color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 100px; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: center;">My Approved Requests</h1>
+    </div>
+</section>
+
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+        <a style="float:left" href="/TravelPost/Aplications">
+            <img width="45" src="~/images/back.png" />
+        </a>
+    </div>
+    <div class="col-3"></div>
+</div>
+<br />
+<br />
+<div class="row">
+    <div class="col-3">
+
+    </div>
+    <div class="col-6">
+        <table id="myTable" class="borderless-table">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (TravelPost item in Model.Items)
+                {
+                <tr>
+                    <td>
+                        <div class="card">
+                            <div class="card-header" style="background-color:darkseagreen">
+                                @foreach (User u in Model.Users)
+                                {
+                                    if (u.Id == item.UserId)
+                                    {
+                                        <span> @u.FirstName @u.LastName (@u.Username) </span>
+                                    }
+                                }
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    @item.CityOfDeparture (@item.HourOfDeparture) - @item.CityOfDestination (@item.HourOfDestination)<br />
+                                    Available Seats: @item.AvailableSeats
+                                </h5>
+                                <p class="card-text">
+                                    <strong>Address of departure</strong>: @item.AddressOfDeparture<br />
+                                    <strong>Address of destination</strong>: @item.AddressOfDestination<br />
+                                    <strong>Price</strong>: @Math.Round(item.Price, 2) leva
+                                </p>
+                            </div>
+                        </div>
+                        <br /><br /><br />
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-3">
+
+    </div>
+</div>
+<script>
+    window.
+        onload
+        = function () {
+            Particles.
+                init
+                ({
+                    selector:
+                        '.background'
+                });
+        };
+    var particles = Particles.init({
+        selector: '.background',
+        color: ['#DA0463', '#404B69', '#DBEDF3'],
+        connectParticles: true
+    });
+</script>
+<canvas class="background"></canvas>
+

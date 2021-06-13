@@ -1,0 +1,75 @@
+﻿@model Shared_Traveling.ViewModels.TravelPosts.EditVM
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.2/particles.min.js"></script>
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+        <form action="/TravelPost/Edit" method="post">
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.UserId)
+            <div class="card">
+                <div class="card-header">
+                    Post
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <label>City Of Departure</label>
+                        @Html.TextBoxFor(p => p.CityOfDeparture, null, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(p => p.CityOfDeparture, null, new { @class = "error" })
+                        <label for="HourOfDeparture"> Date and Hour Of Departure</label>
+                        <input type="datetime-local" id="HourOfDeparture" name="HourOfDeparture" class="form-control" value=@Model.HourOfDeparture>
+                        @Html.ValidationMessageFor(p => p.HourOfDeparture, null, new { @class = "error" })
+                        <label>City Of Destination</label>
+                        @Html.TextBoxFor(p => p.CityOfDestination, null, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(p => p.CityOfDestination, null, new { @class = "error" })
+                        <label for="HourOfDestination">Date and Hour of Arrival</label>
+                        <input type="datetime-local" id="HourOfDestination" name="HourOfDestination" class="form-control" value=@Model.HourOfDestination>
+                        @Html.ValidationMessageFor(p => p.HourOfDestination, null, new { @class = "error" })<br />
+                        <label for="AvailableSeats">Available Seats</label>
+                        <input type="number" id="AvailableSeats" name="AvailableSeats" value=@Model.AvailableSeats><br />
+                        @Html.ValidationMessageFor(p => p.AvailableSeats, null, new { @class = "error" })<br />
+                        <label for="AddressOfDeparture">Address of Departure</label>
+                        @Html.TextBoxFor(p => p.AddressOfDeparture, null, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(p => p.AddressOfDeparture, null, new { @class = "error" })
+                        <label>Address of Destination</label>
+                        @Html.TextBoxFor(p => p.AddressOfDestination, null, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(p => p.AddressOfDestination, null, new { @class = "error" }) <br />
+                        <label for="Price">Price Per Passenger</label>
+                        <input type="number" id="Price" name="Price" step="any">
+                        @Html.ValidationMessageFor(p => p.Price, null, new { @class = "error" })
+                    </h5>
+                    <input class="btn btn-primary " type="submit" name="Edit" value="Edit Post" />
+                </div>
+            </div>
+        </form>
+        <br />
+        <a href="/TravelPost/Index">
+            <img width="45" src="~/images/back.png" />
+        </a>
+        <br /><br />
+    </div>
+    <div class="col-3"></div>
+</div>
+<script>
+    window.
+        onload
+        = function () {
+            Particles.
+                init
+                ({
+                    selector:
+                        '.background'
+                });
+        };
+    var particles = Particles.init({
+        selector: '.background',
+        color: ['#DA0463', '#404B69', '#DBEDF3'],
+        connectParticles: true
+    });
+</script>
+<canvas class="background"></canvas>
+

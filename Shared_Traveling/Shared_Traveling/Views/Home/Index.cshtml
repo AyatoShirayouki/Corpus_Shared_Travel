@@ -1,0 +1,164 @@
+﻿@model Shared_Traveling.ViewModels.Home.GetPostsVM
+@using Microsoft.AspNetCore.Http;
+@using Shared_Traveling.Entities
+@using System.Linq
+@{
+    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.2/particles.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.2/particles.min.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<link href="//datatables.net/download/build/nightly/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+<script src="//datatables.net/download/build/nightly/jquery.dataTables.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });
+</script>
+
+@if (this.Context.Session.GetString("loggedUser") == null)
+{
+    <section class="jumbotron text-center" style="opacity: 0.9">
+        <div class="container">
+            <h1 class="jumbotron-heading" style=" color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 100px; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: center;">Welcome to Shared Traveling</h1>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <center>
+                        <h2><b>We Offer</b></h2>
+                    </center>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <center>
+                        <img width="150px" src="~/images/social-media.png" />
+                        <h4>Posting</h4>
+                        <p class="text-center">
+                            Easy Offer <b>Posting</b><br />
+                            Easy Offer <b>Editing</b><br />
+                            Easy <b>Approval</b>
+                        </p>
+                    </center>
+                </div>
+                <div class="col-md-4">
+                    <center>
+                        <img width="150px" src="~/images/approved.png" />
+                        <h4>Approval</h4>
+                        <p class="text-center">
+                            <b>Create your Offer</b> and <b>Choose The People you Like</b><br />
+
+                        </p>
+                    </center>
+                </div>
+                <div class="col-md-4">
+                    <center>
+                        <img width="150" src="~/images/rules.png" />
+                        <h4>Comunity Guidelines</h4>
+                        <p class="text-center">
+                            We have strict rules<br />
+                            you have to follol <br />
+                            Signing up.
+                        </p>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+else
+{
+    <section class="jumbotron text-center" style="opacity: 0.9">
+        <div class="container">
+            <h1 class="jumbotron-heading" style=" color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 100px; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: center;">Travel Offers</h1>
+        </div>
+    </section>
+
+    <div class="row">
+        <div class="col-3">
+
+        </div>
+        <div class="col-6">
+            <table id="myTable" class="borderless-table">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (TravelPost item in Model.Items)
+                    {
+                        if (item.AvailableSeats > 0)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            @foreach (User u in Model.Users)
+                                            {
+                                                if (u.Id == item.UserId)
+                                                {
+                                                    <span>@u.FirstName @u.LastName (@u.Username)</span>
+                                                }
+                                            }
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title">
+                                                @item.CityOfDeparture (@item.HourOfDeparture) - @item.CityOfDestination (@item.HourOfDestination)<br />
+                                                Available Seats: @item.AvailableSeats
+                                            </h5>
+                                            <p class="card-text">
+                                                <strong>Address of departure</strong>: @item.AddressOfDeparture<br />
+                                                <strong>Address of destination</strong>: @item.AddressOfDestination<br />
+                                                <strong>Price</strong>: @Math.Round(item.Price, 2, MidpointRounding.AwayFromZero) leva
+                                            </p>
+                                            @using (Html.BeginForm("CreateRequest", "Requests", new { parentId = item.Id }, FormMethod.Post))
+                                            {
+                                                <button class="btn btn-success">Apply</button>
+                                            }
+                                        </div>
+                                    </div>
+                                    <br />
+                                </td>
+                            </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+            
+        </div>
+
+        <div class="col-3">
+
+        </div>
+    </div>
+}
+
+
+<script>
+    window.
+        onload
+        = function () {
+            Particles.
+                init
+                ({
+                    selector:
+                        '.background'
+                });
+        };
+    var particles = Particles.init({
+        selector: '.background',
+        color: ['#DA0463', '#404B69', '#DBEDF3'],
+        connectParticles: true
+    });
+</script>
+<canvas class="background"></canvas>
